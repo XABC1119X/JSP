@@ -1,0 +1,53 @@
+/* 全局樣式 */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+/* 容器樣式 */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* 貼文卡片 */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    background: white;
+}
+
+/* 貼文內的圖片 */
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* 標題樣式 */
+h3 {
+    font-weight: bold;
+}
+
+/* 回首頁按鈕 */
+.back-button {
+    margin-bottom: 15px;
+    display: inline-block;
+    text-decoration: none;
+    color: #6c757d;
+}
+
+.back-button:hover {
+    color: #343a40;
+    text-decoration: underline;
+}
+
+.card-style {
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}

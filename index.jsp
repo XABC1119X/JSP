@@ -32,6 +32,7 @@
     <meta charset="UTF-8">
     <title>Threads 留言牆</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type ="text/css" href="css/style.css">
 </head>
 <body class="bg-light">
 <div class="container py-4">
