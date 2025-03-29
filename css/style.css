@@ -44,6 +44,15 @@ h3 {
     text-decoration: underline;
 }
 
+.list {
+    width:350px;
+    height:175px;
+    left:0;
+    position:static;
+    border:solid 5px rgb(117, 175, 24);
+    height:150px;
+}
+
 .card-style {
     border-radius: 20px;
     padding: 30px;
