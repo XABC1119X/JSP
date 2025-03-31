@@ -20,6 +20,9 @@
     List<String[]> posts = (List<String[]>) ctx.getAttribute("posts");
     if (posts == null) posts = new ArrayList<>();
 %>
+<%
+String usertext = "這人很懶沒留下任何訊息";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,6 +45,8 @@
      <!-- 右側留言牆 -->
      <div class="content">
        <h3>👤 @<%= user %> 的 Threads</h3>
+       <br>
+       <h5> <%= usertext %></h5>
         <% for (int i = posts.size() - 1; i >= 0; i--) {
             String[] post = posts.get(i);
             if (user.equals(post[0])) {
