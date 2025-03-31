@@ -41,7 +41,12 @@
         <div class="sidebar">
             <ul>
                 <li><a href="index.jsp">🏠 回首頁</a></li>
-                <li><a href="my.jsp">👤 我的貼文</a></li>
+                <% if (user != null) { %>
+                      <li><a href="my.jsp">👤 我的貼文</a></li>
+                <% } else { %>
+                    <li><a href="login.jsp">👤 登入 / 註冊</a></li>
+                <% } %>
+              
                 <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
             </ul>
         </div>
