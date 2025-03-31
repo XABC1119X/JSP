@@ -1,15 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="jakarta.servlet.http.Cookie, java.util.*" %>
 <%
-    String user = null;
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-        for (Cookie c : cookies) {
-            if ("user".equals(c.getName())) {
-                user = c.getValue();
-            }
-        }
-    }
+    String user = (String) session.getAttribute("user");
 
     ServletContext ctx = getServletContext();
     List<String[]> posts = (List<String[]>) ctx.getAttribute("posts");
@@ -102,7 +94,7 @@
                 <li>
                     <a class="pop-button ">➕ 新增貼文</a>
                 </li>
-                <% if (session.getAttribute("username") != null) { %>
+                <% if (user != null) { %>
                     <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
                 <% } %>
 

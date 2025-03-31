@@ -1,44 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="jakarta.servlet.http.*, java.util.*" %>
+
 <%
     String error = null;
-    String user = null;
-    ServletContext ctx = getServletContext();
-    Map<String, String> users = (Map<String, String>) ctx.getAttribute("users");
-    if (users == null) {
-        users = new HashMap<>();
-        ctx.setAttribute("users", users);
-    }
 
     if ("POST".equalsIgnoreCase(request.getMethod())) {
-        String u = request.getParameter("username");
-        String p = request.getParameter("password");
-        String action = request.getParameter("action");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        if ("login".equals(action)) {
-            if (users.containsKey(u) && users.get(u).equals(p)) {
-                Cookie c = new Cookie("user", u);
-                c.setMaxAge(3600);
-                response.addCookie(c);
-                response.sendRedirect("index.jsp");
-                return;
-            } else {
-                error = "登入失敗：帳號或密碼錯誤";
-            }
-        } else if ("register".equals(action)) {
-            if (users.containsKey(u)) {
-                error = "註冊失敗：帳號已存在";
-            } else {
-                users.put(u, p);
-                Cookie c = new Cookie("user", u);
-                c.setMaxAge(3600);
-                response.addCookie(c);
-                response.sendRedirect("index.jsp");
-                return;
-            }
+        if ("1234".equals(username) && "1234".equals(password)) {
+            session.setAttribute("user", username); 
+            response.sendRedirect("index.jsp");
+            return; 
+        } else {
+            error = "帳號或密碼錯誤";
         }
     }
 %>
+
+
 <!DOCTYPE html>
 <html>
 <head>

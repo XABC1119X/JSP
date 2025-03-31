@@ -1,15 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="jakarta.servlet.http.Cookie, java.util.*" %>
 <%
-    String user = null;
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-        for (Cookie c : cookies) {
-            if ("user".equals(c.getName())) {
-                user = c.getValue();
-            }
-        }
-    }
+    String user = (String) session.getAttribute("user");
 
     if (user == null) {
         response.sendRedirect("login.jsp");
