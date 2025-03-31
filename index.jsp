@@ -70,7 +70,7 @@
 
             if (popButton) {
                 popButton.addEventListener("click", function () {
-                    popOut.style.display = "flex"; // 先顯示
+                    popOut.style.display = "flex"; 
                     gsap.fromTo(".pop-out", { opacity: 0 }, { opacity: 1, duration: 0.5 });
                 });
             }
@@ -78,7 +78,7 @@
             if (closeButton) {
                 closeButton.addEventListener("click", function () {
                     gsap.to(".pop-out", { opacity: 0, duration: 0.5, onComplete: function() {
-                        popOut.style.display = "none"; // 動畫結束後隱藏
+                        popOut.style.display = "none"; 
                     }});
                 });
             }
