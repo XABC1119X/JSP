@@ -97,7 +97,7 @@
                     <li><a href="login.jsp">👤 登入 / 註冊</a></li>
                 <% } %>
                 <li>
-                    <button class="pop-button btn btn-outline-primary">➕ 新增貼文</button>
+                    <a class="pop-button ">➕ 新增貼文</a>
                 </li>
                 <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
             </ul>
