@@ -99,8 +99,8 @@
        <!-- 彈跳視窗 -->
        <div id="newPostModal" class="pop-out" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
         <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
+            <h1>⚔︎</h1>
             <h5>新增貼文</h5>
-
             <% if (user != null) { %>
                 <form method="post" class="mb-4">
                     <textarea name="message" class="form-control mb-2" placeholder="輸入貼文內容..." required></textarea>
@@ -109,7 +109,7 @@
                     <button type="button" class="close-button btn btn-secondary">取消</button>
                 </form>
             <% } else { %>
-                <div class="alert alert-warning">登入後可留言</div>
+                <div class="alert alert-warning">登入後可貼文貼文</div>
                 <div class="button-group">
                     <a href="login.jsp" class="action-button"  >👤 登入 / 註冊</a>
                     <button type="button" class="action-button close-button"  >取消</button>
@@ -166,7 +166,8 @@
                            
                             <div class="pop-out" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
                                 <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
-                                     <h5>註冊即可按讚</h5>
+                                    <h1>⚔︎</h1>
+                                    <h5>註冊即可按讚</h5>
                                      <div class="alert alert-warning">加入即可對貼文按讚並互動</div>
                                     <div class="button-group">
                                         <a href="login.jsp" class="action-button "  >👤 登入 / 註冊</a>
@@ -182,6 +183,7 @@
                             <button type="button"  class="pop-button btn btn-outline-secondary btn-sm " >💬 留言</button>
                             <div class="pop-out" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
                                 <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
+                                    <h1>⚔︎</h1>
                                     <h5>註冊即可回覆</h5>
                                     <div class="alert alert-warning">加入即可參與對話。</div>
                                     <div class="button-group">
