@@ -18,6 +18,62 @@
         }
     }
 %>
+
+ <!-- 愛心邏輯 -->
+<%
+    String action = request.getParameter("action");
+    String likeIndexStr = request.getParameter("likeIndex");
+
+    if ("like".equals(action) && likeIndexStr != null) {
+        int index = Integer.parseInt(likeIndexStr);
+        if (index >= 0 && index < posts.size()) {
+            String[] p = posts.get(index);
+            int likeCount = 0;
+
+            if (p.length > 3) {
+                likeCount = Integer.parseInt(p[3]);
+            }
+
+            likeCount++; // 每點一次加 1
+
+            String[] updated;
+            if (p.length > 3) {
+                updated = Arrays.copyOf(p, p.length);
+                updated[3] = String.valueOf(likeCount); 
+            } else {
+                updated = Arrays.copyOf(p, 4); 
+                updated[3] = String.valueOf(likeCount); 
+            }
+
+            posts.set(index, updated);
+
+
+        }
+    }
+%>
+ <!-- 留言邏輯 -->
+<%
+    if ("comment".equals(action)) {
+        String commentIndexStr = request.getParameter("commentIndex");
+        String commentText = request.getParameter("comment");
+
+        if (commentIndexStr != null && commentText != null && !commentText.trim().isEmpty()) {
+            int index = Integer.parseInt(commentIndexStr);
+            if (index >= 0 && index < posts.size()) {
+                String[] p = posts.get(index);
+
+                String commentFull = "@" + user + ": " + commentText;
+
+                String[] updated = Arrays.copyOf(p, p.length + 1);
+                updated[updated.length - 1] = commentFull;
+
+                posts.set(index, updated); 
+            }
+        }
+    }
+%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,10 +170,57 @@
                     <% if (post[2] != null && !post[2].isEmpty()) { %>
                         <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
                     <% } %>
+
+                   <!--按鈕區 -->
+                    <div class="mt-2">
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="likeIndex" value="<%= i %>">
+                            <button type="submit" name="action" value="like" class="btn btn-outline-danger btn-sm">❤️</button>
+                            <span><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>
+                        </form>
+
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleComment('<%= i %>')">💬 留言</button>
+                    </div>
+
+                    <!-- 留言 -->
+                    <div id="comment-form-<%= i %>" style="display: none;" class="mt-2">
+                        <form method="post">
+                            <input type="hidden" name="commentIndex" value="<%= i %>">
+                            <input type="text" name="comment" class="form-control form-control-sm mb-1" placeholder="留言..." required>
+                            <button type="submit" name="action" value="comment" class="btn btn-sm btn-secondary">送出</button>
+                        </form>
+                    </div>
+
+                    <div class="comment-section mt-2 ps-2">
+                        <%
+                            for (int j = 4; j < post.length; j++) {
+                        %>
+                            <div class="comment-item d-flex align-items-start gap-1 mb-1">
+                                <span class="text-muted">💬</span>
+                                <div class="text-muted small"><%= post[j] %></div>
+                            </div>
+                        <%
+                            }
+                        %>
+                        </div>
+
                 </div>
+                
             <% } %>
         </div>
     </div>
     
 </body>
 </html>
+
+<script>
+    function toggleComment(index) {
+        const el = document.getElementById("comment-form-" + index);
+        if (el.style.display === "none") {
+            el.style.display = "block";
+        } else {
+            el.style.display = "none";
+        }
+    }
+    </script>
+    

@@ -39,18 +39,57 @@ String usertext = "這人很懶沒留下任何訊息";
        <h3>👤 @<%= user %> 的 Threads</h3>
        <br>
        <h5> <%= usertext %></h5>
-        <% for (int i = posts.size() - 1; i >= 0; i--) {
-            String[] post = posts.get(i);
-            if (user.equals(post[0])) {
-        %>
-            <div class="card mb-3 p-3">
-                <strong>@<%= post[0] %></strong><br>
-                <p><%= post[1] %></p>
-                <% if (post[2] != null && !post[2].isEmpty()) { %>
-                    <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
-                <% } %>
+
+       <% for (int i = posts.size() - 1; i >= 0; i--) {
+        String[] post = posts.get(i);
+    %>
+        <div class="card mb-3 p-3">
+            <strong>@<%= post[0] %></strong><br>
+            <p><%= post[1] %></p>
+            <% if (post[2] != null && !post[2].isEmpty()) { %>
+                <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
+            <% } %>
+
+           <!--按鈕區 -->
+           <div class="d-flex align-items-center gap-3 mt-2">
+            <form id="likeForm-<%= i %>" method="post" class="d-flex align-items-center gap-1 m-0">
+                <input type="hidden" name="likeIndex" value="<%= i %>">
+                <input type="hidden" name="action" value="like">
+                <span style="cursor:pointer;  color: red;" onclick="document.getElementById('likeForm-<%= i %>').submit()">❤️</span>
+                <span class="text-dark fw-bold"><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>
+            </form>
+        
+            <span style="cursor:pointer; " onclick="toggleComment('<%= i %>')">
+                💬 <span class="text-dark fw-bold">留言</span>
+            </span>
+        </div>
+
+            <!-- 留言 -->
+            <div id="comment-form-<%= i %>" style="display: none;" class="mt-2">
+                <form method="post">
+                    <input type="hidden" name="commentIndex" value="<%= i %>">
+                    <input type="text" name="comment" class="form-control form-control-sm mb-1" placeholder="留言..." required>
+                    <button type="submit" name="action" value="comment" class="btn btn-sm btn-secondary">送出</button>
+                </form>
             </div>
-        <% }} %>
+
+            <div class="comment-section mt-2 ps-2">
+                <%
+                    for (int j = 4; j < post.length; j++) {
+                %>
+                    <div class="comment-item d-flex align-items-start gap-1 mb-1">
+                        <span class="text-muted">💬</span>
+                        <div class="text-muted small"><%= post[j] %></div>
+                    </div>
+                <%
+                    }
+                %>
+                </div>
+
+        </div>
+        
+    <% } %>
+
     </div>
 
     
