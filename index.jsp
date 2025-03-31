@@ -55,7 +55,10 @@
                 </form>
             <% } else { %>
                 <div class="alert alert-warning">登入後可留言</div>
-                <a href="login.jsp">👤 登入 / 註冊</a>
+                <div class="button-group">
+                    <a href="login.jsp" class="action-button"  >👤 登入 / 註冊</a>
+                    <button type="button" class="action-button close-button"  >取消</button>
+                </div>
             <% } %>
 
             
@@ -99,7 +102,10 @@
                 <li>
                     <a class="pop-button ">➕ 新增貼文</a>
                 </li>
-                <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
+                <% if (session.getAttribute("username") != null) { %>
+                    <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
+                <% } %>
+
             </ul>
         </div>
     

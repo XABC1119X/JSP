@@ -51,6 +51,30 @@ body {
     font-weight: bold;
 }
 
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.action-button {
+    color: black;
+    background-color:white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #ddd;
+}
+
 /* 容器樣式 
 .container {
     max-width: 800px;
