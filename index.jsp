@@ -173,13 +173,38 @@
 
                    <!--按鈕區 -->
                     <div class="mt-2">
-                        <form method="post" style="display:inline;">
+                        <% if (user != null) { %>
+                            <form method="post" style="display:inline;">
                             <input type="hidden" name="likeIndex" value="<%= i %>">
                             <button type="submit" name="action" value="like" class="btn btn-outline-danger btn-sm">❤️</button>
                             <span><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>
-                        </form>
-
-                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleComment('<%= i %>')">💬 留言</button>
+                            </form>
+                        <% } else { %>
+                            <div class="pop-out" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
+                                <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
+                                    <div class="alert alert-warning">登入後可留言</div>
+                                    <div class="button-group">
+                                        <a href="login.jsp" class="action-button"  >👤 登入 / 註冊</a>
+                                        <button type="button" class="action-button close-button"  >取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                        
+                        <% if (user != null) { %>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleComment('<%= i %>')">💬 留言</button>
+                        <% } else { %>
+                            <div class="pop-out" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
+                                <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
+                                    <div class="alert alert-warning">登入後可留言</div>
+                                    <div class="button-group">
+                                        <a href="login.jsp" class="action-button"  >👤 登入 / 註冊</a>
+                                        <button type="button" class="action-button close-button"  >取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                       
                     </div>
 
                     <!-- 留言 -->
