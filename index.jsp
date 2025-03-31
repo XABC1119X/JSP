@@ -33,9 +33,58 @@
     <title>Threads 留言牆</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type ="text/css" href="css/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+
 </head>
 
 <body class="bg-light">
+
+       <!-- 彈跳視窗 -->
+       <div class="pop-out" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
+        <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
+            <h5>新增貼文</h5>
+
+            <% if (user != null) { %>
+                <form method="post" class="mb-4">
+                    <textarea name="message" class="form-control mb-2" placeholder="輸入貼文內容..." required></textarea>
+                    <input name="image" class="form-control mb-2" placeholder="圖片網址 (可選)">
+                    <button type="submit" class="btn btn-success">發佈</button>
+                    <button type="button" class="close-button btn btn-secondary">取消</button>
+                </form>
+            <% } else { %>
+                <div class="alert alert-warning">登入後可留言</div>
+                <a href="login.jsp">👤 登入 / 註冊</a>
+            <% } %>
+
+            
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let popOut = document.querySelector(".pop-out");
+            let popButton = document.querySelector(".pop-button");
+            let closeButton = document.querySelector(".close-button");
+
+            if (popButton) {
+                popButton.addEventListener("click", function () {
+                    popOut.style.display = "flex"; // 先顯示
+                    gsap.fromTo(".pop-out", { opacity: 0 }, { opacity: 1, duration: 0.5 });
+                });
+            }
+
+            if (closeButton) {
+                closeButton.addEventListener("click", function () {
+                    gsap.to(".pop-out", { opacity: 0, duration: 0.5, onComplete: function() {
+                        popOut.style.display = "none"; // 動畫結束後隱藏
+                    }});
+                });
+            }
+        });
+    </script>
+
     <div class="container py-4 d-flex">
         <!-- 左側列表 -->
         <div class="sidebar">
@@ -47,7 +96,9 @@
                 <% } else { %>
                     <li><a href="login.jsp">👤 登入 / 註冊</a></li>
                 <% } %>
-                <li><a href="post.jsp">➕ 新增貼文</a></li> 
+                <li>
+                    <button class="pop-button btn btn-outline-primary">➕ 新增貼文</button>
+                </li>
                 <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
             </ul>
         </div>
@@ -55,16 +106,6 @@
         <!-- 右側留言牆 -->
         <div class="content">
             <h3>🧵 Threads 留言牆</h3>
-            
-            <% if (user != null) { %>
-                <form method="post" class="mb-4">
-                    <textarea name="message" class="form-control mb-2" placeholder="輸入貼文內容..."></textarea>
-                    <input name="image" class="form-control mb-2" placeholder="圖片網址 (可選)">
-                    <button type="submit" class="btn btn-primary">發佈</button>
-                </form>
-            <% } else { %>
-                <div class="alert alert-warning">登入後可留言</div>
-            <% } %>
     
             <% for (int i = posts.size() - 1; i >= 0; i--) {
                 String[] post = posts.get(i);

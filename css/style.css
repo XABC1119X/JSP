@@ -108,3 +108,58 @@ h3 {
     background: white;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
+
+/* 彈跳視窗 */
+        .pop-button {
+            font-weight: bold;
+        }
+
+        .pop-out {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .pop-out-panel {
+            min-width:425px;
+            min-height: 30vh;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .panel-header {
+            font-size: 1.5rem;
+            font-weight: bold;  
+            font-weight: 900;
+            padding: 2% 0;
+            border-bottom: solid rgba(53, 53, 53, 0.756) 1px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .panel-content {
+            padding: 3% 0;
+        }
+
+        .panel-container {
+            padding-left:3%;
+            padding-right:3%;
+        }
+
+        .panel-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding-top: 2%;
+            padding-right: 3%;
+        }
