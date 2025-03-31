@@ -47,7 +47,7 @@
                 <% } else { %>
                     <li><a href="login.jsp">👤 登入 / 註冊</a></li>
                 <% } %>
-              
+                <li><a href="post.jsp">➕ 新增貼文</a></li> 
                 <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
             </ul>
         </div>
