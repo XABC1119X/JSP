@@ -50,28 +50,21 @@ String usertext = "這人很懶沒留下任何訊息";
                 <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
             <% } %>
 
-           <!--按鈕區 -->
-           <div class="d-flex align-items-center gap-3 mt-2">
-            <form id="likeForm-<%= i %>" method="post" class="d-flex align-items-center gap-1 m-0">
-                <input type="hidden" name="likeIndex" value="<%= i %>">
-                <input type="hidden" name="action" value="like">
-                <span style="cursor:pointer;  color: red;" onclick="document.getElementById('likeForm-<%= i %>').submit()">❤️</span>
-                <span class="text-dark fw-bold"><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>
-            </form>
-        
-            <span style="cursor:pointer; " onclick="toggleComment('<%= i %>')">
+            <div class="mt-2 d-flex align-items-center">            
+                    <input type="hidden" name="likeIndex" value="<%= i %>">
+                    <span style="cursor:pointer;  color: red;" onclick="document.getElementById('likeForm-<%= i %>').submit()">❤️</span>&nbsp;&nbsp;
+                <span id="like-count-<%= i %>"><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>&nbsp;&nbsp;</span>
                 💬 <span class="text-dark fw-bold">留言</span>
-            </span>
-        </div>
-
-            <!-- 留言 -->
-            <div id="comment-form-<%= i %>" style="display: none;" class="mt-2">
-                <form method="post">
-                    <input type="hidden" name="commentIndex" value="<%= i %>">
-                    <input type="text" name="comment" class="form-control form-control-sm mb-1" placeholder="留言..." required>
-                    <button type="submit" name="action" value="comment" class="btn btn-sm btn-secondary">送出</button>
-                </form>
             </div>
+
+
+
+          <!-- 留言 -->
+          <div id="comment-form-<%= i %>" style="display: none;" class="mt-2">
+            <form method="post">
+                <input type="hidden" name="commentIndex" value="<%= i %>">
+            </form>
+         </div>
 
             <div class="comment-section mt-2 ps-2">
                 <%
@@ -84,8 +77,7 @@ String usertext = "這人很懶沒留下任何訊息";
                 <%
                     }
                 %>
-                </div>
-
+            </div>
         </div>
         
     <% } %>
@@ -96,3 +88,20 @@ String usertext = "這人很懶沒留下任何訊息";
 </div>
 </body>
 </html>
+
+<script>
+    function toggleComment(index) {
+    const el = document.getElementById("comment-form-" + index);
+    const btn = document.getElementById("comment-button-" + index);
+
+    if (el.style.display === "none" || el.style.display === "") {
+        el.style.display = "block";
+        btn.classList.remove("btn-outline-secondary");
+        btn.classList.add("btn-dark");
+    } else {
+        el.style.display = "none";
+        btn.classList.remove("btn-dark");
+        btn.classList.add("btn-outline-secondary");
+    }
+}
+</script>
