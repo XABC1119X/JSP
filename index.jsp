@@ -36,37 +36,43 @@
 </head>
 
 <body class="bg-light">
-<div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>🧵 Threads 留言牆</h3>
-        <% if (user != null) { %>
-            <a href="my.jsp" class="btn btn-sm btn-outline-dark">👤 我的主頁</a>
-        <% } else { %>
-            <a href="login.jsp" class="btn btn-sm btn-outline-primary">登入 / 註冊</a>
-        <% } %>
-    </div>
-
-    <% if (user != null) { %>
-    <form method="post" class="mb-4">
-        <textarea name="message" class="form-control mb-2" placeholder="輸入貼文內容..."></textarea>
-        <input name="image" class="form-control mb-2" placeholder="圖片網址 (可選)">
-        <button type="submit" class="btn btn-primary">發佈</button>
-    </form>
-    <% } else { %>
-        <div class="alert alert-warning">登入後可留言</div>
-    <% } %>
-
-    <% for (int i = posts.size() - 1; i >= 0; i--) {
-        String[] post = posts.get(i);
-    %>
-        <div class="card mb-3 p-3">
-            <strong>@<%= post[0] %></strong><br>
-            <p><%= post[1] %></p>
-            <% if (post[2] != null && !post[2].isEmpty()) { %>
-                <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
+    <div class="container py-4 d-flex">
+        <!-- 左側列表 -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="index.jsp">🏠 回首頁</a></li>
+                <li><a href="my.jsp">👤 我的貼文</a></li>
+                <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
+            </ul>
+        </div>
+    
+        <!-- 右側留言牆 -->
+        <div class="content">
+            <h3>🧵 Threads 留言牆</h3>
+            
+            <% if (user != null) { %>
+                <form method="post" class="mb-4">
+                    <textarea name="message" class="form-control mb-2" placeholder="輸入貼文內容..."></textarea>
+                    <input name="image" class="form-control mb-2" placeholder="圖片網址 (可選)">
+                    <button type="submit" class="btn btn-primary">發佈</button>
+                </form>
+            <% } else { %>
+                <div class="alert alert-warning">登入後可留言</div>
+            <% } %>
+    
+            <% for (int i = posts.size() - 1; i >= 0; i--) {
+                String[] post = posts.get(i);
+            %>
+                <div class="card mb-3 p-3">
+                    <strong>@<%= post[0] %></strong><br>
+                    <p><%= post[1] %></p>
+                    <% if (post[2] != null && !post[2].isEmpty()) { %>
+                        <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
+                    <% } %>
+                </div>
             <% } %>
         </div>
-    <% } %>
-</div>
+    </div>
+    
 </body>
 </html>
