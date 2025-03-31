@@ -40,6 +40,7 @@
         <!-- 左側列表 -->
         <div class="sidebar">
             <ul>
+                <h1>⚔︎</h1>
                 <li><a href="index.jsp">🏠 回首頁</a></li>
                 <% if (user != null) { %>
                       <li><a href="my.jsp">👤 我的貼文</a></li>
