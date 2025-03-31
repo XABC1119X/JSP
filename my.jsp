@@ -30,20 +30,33 @@
 </head>
 <body class="bg-light">
 <div class="container py-4">
-    <h3>👤 @<%= user %> 的 Threads</h3>
-    <a href="index.jsp" class="btn btn-sm btn-outline-secondary mb-3">⬅ 回首頁</a>
-    <% for (int i = posts.size() - 1; i >= 0; i--) {
-        String[] post = posts.get(i);
-        if (user.equals(post[0])) {
-    %>
-        <div class="card mb-3 p-3">
-            <strong>@<%= post[0] %></strong><br>
-            <p><%= post[1] %></p>
-            <% if (post[2] != null && !post[2].isEmpty()) { %>
-                <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
-            <% } %>
-        </div>
-    <% }} %>
+     <!-- 左側列表 -->
+     <div class="sidebar">
+        <ul>
+            <h1>⚔︎</h1>
+            <li><a href="index.jsp">🏠 回首頁</a></li>
+            <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
+        </ul>
+    </div>
+
+     <!-- 右側留言牆 -->
+     <div class="content">
+       <h3>👤 @<%= user %> 的 Threads</h3>
+        <% for (int i = posts.size() - 1; i >= 0; i--) {
+            String[] post = posts.get(i);
+            if (user.equals(post[0])) {
+        %>
+            <div class="card mb-3 p-3">
+                <strong>@<%= post[0] %></strong><br>
+                <p><%= post[1] %></p>
+                <% if (post[2] != null && !post[2].isEmpty()) { %>
+                    <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
+                <% } %>
+            </div>
+        <% }} %>
+    </div>
+
+    
 </div>
 </body>
 </html>
