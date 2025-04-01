@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="jakarta.servlet.http.Cookie, java.util.*" %>
 <%
+    <!-- 帳密 -->
     String user = (String) session.getAttribute("user");
 
     ServletContext ctx = getServletContext();
@@ -17,108 +18,103 @@
             posts.add(new String[]{user, msg, img});
         }
     }
-%>
+    %>
 
- <!-- 愛心邏輯 -->
- <%
- String action = request.getParameter("action");
- String likeIndexStr = request.getParameter("likeIndex");
- Cookie[] cookies = request.getCookies();
+    <!-- 愛心邏輯 -->
+    <%
+    String action = request.getParameter("action");
+    String likeIndexStr = request.getParameter("likeIndex");
+    Cookie[] cookies = request.getCookies();
 
- if ("like".equals(action) && likeIndexStr != null && user != null) {
-     int index = Integer.parseInt(likeIndexStr);
+    if ("like".equals(action) && likeIndexStr != null && user != null) {
+        int index = Integer.parseInt(likeIndexStr);
 
-     if (index >= 0 && index < posts.size()) {
-         String cookieName = "liked_post_" + index;
-         boolean hasLiked = false;
+        if (index >= 0 && index < posts.size()) {
+            String cookieName = "liked_post_" + index;
+            boolean hasLiked = false;
 
-         if (cookies != null) {
-             for (Cookie cookie : cookies) {
-                 if (cookie.getName().equals(cookieName)) {
-                     hasLiked = true;
-                     break;
-                 }
-             }
-         }
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals(cookieName)) {
+                        hasLiked = true;
+                        break;
+                    }
+                }
+            }
 
-         if (!hasLiked) {
-             String[] p = posts.get(index);
-             int likeCount = (p.length > 3) ? Integer.parseInt(p[3]) : 0;
-             likeCount++;
-
-             String[] updated = Arrays.copyOf(p, 4);
-             updated[3] = String.valueOf(likeCount);
-             posts.set(index, updated);
-
-             Cookie likeCookie = new Cookie(cookieName, "true");
-             likeCookie.setMaxAge(60 * 60 * 24); // 設定 1 天內不能重複按讚
-             response.addCookie(likeCookie);
-         }
-     }
- }
-%>
-
- <!-- 留言邏輯 -->
-<%
-    if ("comment".equals(action)) {
-        String commentIndexStr = request.getParameter("commentIndex");
-        String commentText = request.getParameter("comment");
-
-        if (commentIndexStr != null && commentText != null && !commentText.trim().isEmpty()) {
-            int index = Integer.parseInt(commentIndexStr);
-            if (index >= 0 && index < posts.size()) {
+            if (!hasLiked) {
                 String[] p = posts.get(index);
+                int likeCount = (p.length > 3) ? Integer.parseInt(p[3]) : 0;
+                likeCount++;
 
-                String commentFull = "@" + user + ": " + commentText;
+                String[] updated = Arrays.copyOf(p, 4);
+                updated[3] = String.valueOf(likeCount);
+                posts.set(index, updated);
 
-                String[] updated = Arrays.copyOf(p, p.length + 1);
-                updated[updated.length - 1] = commentFull;
-
-                posts.set(index, updated); 
+                Cookie likeCookie = new Cookie(cookieName, "true");
+                likeCookie.setMaxAge(60 * 60 * 24); // 設定 1 天內不能重複按讚
+                response.addCookie(likeCookie);
             }
         }
     }
-%>
+    %>
+
+    <!-- 留言邏輯 -->
+    <%
+        if ("comment".equals(action)) {
+            String commentIndexStr = request.getParameter("commentIndex");
+            String commentText = request.getParameter("comment");
+
+            if (commentIndexStr != null && commentText != null && !commentText.trim().isEmpty()) {
+                int index = Integer.parseInt(commentIndexStr);
+                if (index >= 0 && index < posts.size()) {
+                    String[] p = posts.get(index);
+
+                    String commentFull = "@" + user + ": " + commentText;
+
+                    String[] updated = Arrays.copyOf(p, p.length + 1);
+                    updated[updated.length - 1] = commentFull;
+
+                    posts.set(index, updated); 
+                }
+            }
+        }
+    %>
 
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Threads 留言牆</title>
+    <title>首頁</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type ="text/css" href="css/style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-
 </head>
 
 <body class="bg-light">
-
        <!-- 彈跳視窗 -->
        <div id="newPostModal" class="pop-out" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
-        <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
-            <h1>⚔︎</h1>
-            <h5>新增貼文</h5>
-            <% if (user != null) { %>
-                <form method="post" class="mb-4">
-                    <textarea name="message" class="form-control mb-2" placeholder="輸入貼文內容..." required></textarea>
-                    <input name="image" class="form-control mb-2" placeholder="圖片網址 (可選)">
-                    <button type="submit" class="btn btn-success">發佈</button>
-                    <button type="button" class="close-button btn btn-secondary">取消</button>
-                </form>
-            <% } else { %>
-                <div class="alert alert-warning">登入後可貼文貼文</div>
-                <div class="button-group">
-                    <a href="login.jsp" class="action-button"  >👤 登入 / 註冊</a>
-                    <button type="button" class="action-button close-button"  >取消</button>
-                </div>
-            <% } %>
-
-            
+            <div class="pop-out-panel" style="background: white; width: 300px; padding: 20px; border-radius: 10px; text-align: center;">
+                <h1>⚔︎</h1>
+                <h5>新增貼文</h5>
+                <% if (user != null) { %>
+                    <form method="post" class="mb-4">
+                        <textarea name="message" class="form-control mb-2" placeholder="輸入貼文內容..." required></textarea>
+                        <input name="image" class="form-control mb-2" placeholder="圖片網址 (可選)">
+                        <button type="submit" class="btn btn-success">發佈</button>
+                        <button type="button" class="close-button btn btn-secondary">取消</button>
+                    </form>
+                <% } else { %>
+                    <div class="alert alert-warning">登入後可貼文貼文</div>
+                    <div class="button-group">
+                        <a href="login.jsp" class="action-button"  >👤 登入 / 註冊</a>
+                        <button type="button" class="action-button close-button"  >取消</button>
+                    </div>
+                <% } %>
+            </div>
         </div>
-    </div>
 
     <div class="container py-4 d-flex">
         <!-- 左側列表 -->
@@ -137,14 +133,12 @@
                 <% if (user != null) { %>
                     <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
                 <% } %>
-
             </ul>
         </div>
     
         <!-- 右側留言牆 -->
         <div class="content">
-            <h3>🧵 Threads 留言牆</h3>
-    
+            <h3>🧵 首頁</h3>
             <% for (int i = posts.size() - 1; i >= 0; i--) {
                 String[] post = posts.get(i);
             %>
@@ -157,7 +151,6 @@
 
                    <!--按鈕區 -->
                     <div class="mt-2 d-flex align-items-center"> 
-                        
                         <% if (user != null) { %>
                             <input type="hidden" name="likeIndex" value="<%= i %>">
                             <button type="button" class="btn btn-outline-danger btn-sm" onclick="likePost('<%= i %>')">❤️</button>&nbsp;&nbsp;
@@ -177,6 +170,7 @@
                             </div>
                         <% } %>
                         <span id="like-count-<%= i %>"><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>&nbsp;&nbsp;</span>
+
                         <% if (user != null) { %>
                             <button type="button" id="comment-button-<%= i %>" class="btn btn-outline-secondary btn-sm me-2" onclick="toggleComment('<%= i %>')">💬 留言</button>
                         <% } else { %>
@@ -193,7 +187,6 @@
                                 </div>
                             </div>
                         <% } %>
-                       
                     </div>
 
                     <!-- 留言 -->
@@ -216,54 +209,53 @@
                         <%
                             }
                         %>
-                        </div>
-
+                    </div>
                 </div>
-                
             <% } %>
         </div>
     </div>
     
 </body>
 </html>
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".pop-button").forEach(function(button) {
-        button.addEventListener("click", function () {
-            let popOut;
+    // 彈窗
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".pop-button").forEach(function(button) {
+            button.addEventListener("click", function () {
+                let popOut;
+                const targetSelector = button.getAttribute("data-target");
+                if (targetSelector) {
+                    popOut = document.querySelector(targetSelector);
+                } else {
+                    popOut = button.nextElementSibling;
+                }
 
-            const targetSelector = button.getAttribute("data-target");
-            if (targetSelector) {
-                popOut = document.querySelector(targetSelector);
-            } else {
-                popOut = button.nextElementSibling;
-            }
-
-            if (popOut && popOut.classList.contains("pop-out")) {
-                popOut.style.display = "flex";
-                gsap.fromTo(popOut, { opacity: 0 }, { opacity: 1, duration: 0.5 });
-            }
+                if (popOut && popOut.classList.contains("pop-out")) {
+                    popOut.style.display = "flex";
+                    gsap.fromTo(popOut, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+                }
+            });
         });
-    });
 
     // 關閉彈窗
-    document.querySelectorAll(".close-button").forEach(function(button) {
-        button.addEventListener("click", function () {
-            const popOut = button.closest(".pop-out");
-            if (popOut) {
-                gsap.to(popOut, {
-                    opacity: 0,
-                    duration: 0.5,
-                    onComplete: function () {
-                        popOut.style.display = "none";
-                    }
-                });
-            }
+        document.querySelectorAll(".close-button").forEach(function(button) {
+            button.addEventListener("click", function () {
+                const popOut = button.closest(".pop-out");
+                if (popOut) {
+                    gsap.to(popOut, {
+                        opacity: 0,
+                        duration: 0.5,
+                        onComplete: function () {
+                            popOut.style.display = "none";
+                        }
+                    });
+                }
+            });
         });
     });
-});
    
-// 留言
+    // 留言
     function toggleComment(index) {
     const el = document.getElementById("comment-form-" + index);
     const btn = document.getElementById("comment-button-" + index);
@@ -279,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     }
 
-// 喜歡
+    // 喜歡
     function likePost(index) {
         fetch("index.jsp", {
             method: "POST",

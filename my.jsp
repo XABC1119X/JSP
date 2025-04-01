@@ -57,8 +57,6 @@ String usertext = "這人很懶沒留下任何訊息";
                 💬 <span class="text-dark fw-bold">留言</span>
             </div>
 
-
-
           <!-- 留言 -->
           <div id="comment-form-<%= i %>" style="display: none;" class="mt-2">
             <form method="post">
@@ -79,12 +77,8 @@ String usertext = "這人很懶沒留下任何訊息";
                 %>
             </div>
         </div>
-        
     <% } %>
-
-    </div>
-
-    
+</div>
 </div>
 </body>
 </html>

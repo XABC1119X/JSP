@@ -23,7 +23,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>登入或註冊 Threads</title>
+    <title>登入或註冊</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type ="text/css" href="css/style.css">
     <style>
@@ -38,7 +38,7 @@
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="card-style text-center">
-        <h5 class="fw-bold mb-3">登入或註冊 Threads</h5>
+        <h5 class="fw-bold mb-3">登入或註冊</h5>
         <p class="text-muted">查看人們談論的主題，並加入對話。</p>
         <form method="post">
             <input name="username" class="form-control mb-2" placeholder="帳號名稱" required>
