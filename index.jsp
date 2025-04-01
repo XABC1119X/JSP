@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="jakarta.servlet.http.Cookie, java.util.*" %>
 <%
-    <!-- 帳密 -->
     String user = (String) session.getAttribute("user");
 
     ServletContext ctx = getServletContext();
