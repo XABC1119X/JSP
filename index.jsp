@@ -16,7 +16,7 @@
         String msg = request.getParameter("message");
         String img = request.getParameter("image");
         if (msg != null && !msg.trim().isEmpty()) {
-            posts.add(new String[]{user, msg, img});
+            posts.add(new String[]{user, msg, img, "0"}); 
         }
     }
     %>
