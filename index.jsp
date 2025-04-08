@@ -29,11 +29,11 @@
 
     if ("like".equals(action) && likeIndexStr != null && user != null) {
         int index = Integer.parseInt(likeIndexStr);
-
+    
         if (index >= 0 && index < posts.size()) {
             String cookieName = "liked_post_" + index;
             boolean hasLiked = false;
-
+    
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals(cookieName)) {
@@ -42,22 +42,28 @@
                     }
                 }
             }
-
-            if (!hasLiked) {
-                String[] p = posts.get(index);
-                int likeCount = (p.length > 3) ? Integer.parseInt(p[3]) : 0;
+    
+            String[] p = posts.get(index);
+            int likeCount = (p.length > 3) ? Integer.parseInt(p[3]) : 0;
+    
+            if (hasLiked) {
+                if (likeCount > 0) likeCount--;
+                Cookie unlikeCookie = new Cookie(cookieName, "");
+                unlikeCookie.setMaxAge(0); 
+                response.addCookie(unlikeCookie);
+            } else {
                 likeCount++;
-
-                String[] updated = Arrays.copyOf(p, 4);
-                updated[3] = String.valueOf(likeCount);
-                posts.set(index, updated);
-
                 Cookie likeCookie = new Cookie(cookieName, "true");
-                likeCookie.setMaxAge(60 * 60 * 24); // 設定 1 天內不能重複按讚
+                likeCookie.setMaxAge(60 * 60 * 24);
                 response.addCookie(likeCookie);
             }
+    
+            String[] updated = Arrays.copyOf(p, 4);
+            updated[3] = String.valueOf(likeCount);
+            posts.set(index, updated);
         }
     }
+    
     %>
 
     <!-- 留言邏輯 -->
@@ -274,19 +280,32 @@
 
     // 喜歡
     function likePost(index) {
-        fetch("index.jsp", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: "action=like&likeIndex=" + index
-        })
-        .then(response => response.text())
-        .then(() => {
-            let likeCountSpan = document.getElementById("like-count-" + index);
-            let currentLikes = parseInt(likeCountSpan.textContent) || 0;
-            likeCountSpan.textContent = (currentLikes + 1) + " 人喜歡";
-        })
-        .catch(error => console.error("Error:", error));
-    }
+    const countSpan = document.getElementById("like-count-" + index);
+    const likeBtn = event.target;
+
+    fetch("index.jsp", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "action=like&likeIndex=" + index
+    })
+    .then(response => response.text())
+    .then(() => {
+        let currentLikes = parseInt(countSpan.textContent) || 0;
+        if (likeBtn.classList.contains("liked")) {
+            likeBtn.classList.remove("liked");
+            likeBtn.classList.remove("btn-danger");
+            likeBtn.classList.add("btn-outline-danger");
+            countSpan.textContent = (currentLikes - 1) + " 人喜歡";
+        } else {
+            likeBtn.classList.add("liked");
+            likeBtn.classList.remove("btn-outline-danger");
+            likeBtn.classList.add("btn-danger");
+            countSpan.textContent = (currentLikes + 1) + " 人喜歡";
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
+
 
 </script>
     
