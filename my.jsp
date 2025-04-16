@@ -38,7 +38,7 @@ String usertext = "這人很懶沒留下任何訊息";
 
      <!-- 右側留言牆 -->
      <div class="content">
-       <h3>👤 @<%= user %> 的 Threads</h3>
+       <h3>👤 @<%= user %> 的 Threads <button><a href="editusertext.jsp"> 編輯個人檔案</a></button> </h3>
        <br>
        <h5> <%= usertext %></h5>
 

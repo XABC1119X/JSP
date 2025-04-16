@@ -14,6 +14,24 @@
 </head>
 
 <body class="bg-light">
-
+    <div class="container py-4">
+        <!-- 左側列表 -->
+        <div class="sidebar">
+           <ul>
+               <h1>⚔︎</h1>
+               <li><a href="index.jsp">🏠 回首頁</a></li>
+               <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
+           </ul>
+       </div>
+   
+        <!-- 右側留言牆 -->
+        <div class="content">
+          <h3>👤 編輯個人檔案</h3>
+          <br>
+          
+        </div>
+       <% } %>
+   </div>
+   </div>
 </body>
 </html>
