@@ -134,9 +134,12 @@
                 <% } else { %>
                     <li><a href="login.jsp">👤 登入 / 註冊</a></li>
                 <% } %>
+                <li><a href="search.jsp">🔍 搜尋</a></li>
                 <li>
                     <a class="pop-button" data-target="#newPostModal">➕ 新增貼文</a>
                 </li>
+                <li><a href="messege.jsp">💬 訊息</a></li>
+                <li><a href="notify.jsp">❤️ 通知</a></li>
                 <% if (user != null) { %>
                     <li><a href="logout.jsp" class="logout">🚪 登出</a></li>
                 <% } %>
