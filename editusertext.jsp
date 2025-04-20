@@ -69,7 +69,7 @@
             <% } %>
             <form method="post">
                 <!-- 頭像 -->
-                <div class="d-flex align-items-center mb-3 p-3 bg-white rounded shadow-sm">
+                <div class="d-flex align-items-center mb-3 p-3 rounded shadow-sm" style="background-color: #e9ecef;">
                     <img id="avatarPreview"
                     src="<%= avatarUrl %>"
                     class="me-3"

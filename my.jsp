@@ -72,7 +72,7 @@ if (usertext == null || usertext.trim().isEmpty()) {
             </div>
         </div>
 
-        <!-- Threads 貼文 -->
+        <!--貼文 -->
         <div class="mt-4" >
             <% for (int i = posts.size() - 1; i >= 0; i--) {
                 String[] post = posts.get(i);
@@ -85,7 +85,10 @@ if (usertext == null || usertext.trim().isEmpty()) {
             %>
             <div class="card mb-3 p-3">
                 <div class="d-flex align-items-center mb-2">
-                    <img src="<%= postAvatar %>" class="rounded-circle me-2" width="40" height="40">
+                    <img id="avatarPreview"
+                    src="<%= avatarUrl %>"
+                    class="me-3"
+                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; aspect-ratio: 1 / 1;">
                     <strong>@<%= postUser %></strong>
                 </div>
                 <p><%= post[1] %></p>
