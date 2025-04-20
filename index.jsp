@@ -151,13 +151,24 @@
             <h3>🧵 首頁</h3>
             <% for (int i = posts.size() - 1; i >= 0; i--) {
                 String[] post = posts.get(i);
+            
+                String postUser = post[0];
+                String postAvatar = (String) application.getAttribute("avatar_" + postUser);
+                if (postAvatar == null || postAvatar.trim().isEmpty()) {
+                    postAvatar = "img/avatar.png";
+                }
             %>
-                <div class="card mb-3 p-3">
-                    <strong>@<%= post[0] %></strong><br>
-                    <p><%= post[1] %></p>
-                    <% if (post[2] != null && !post[2].isEmpty()) { %>
-                        <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
-                    <% } %>
+            <div class="card mb-3 p-3">
+                <div class="d-flex align-items-center mb-2">
+                    <img src="<%= postAvatar %>"
+                    class="me-3"
+                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; aspect-ratio: 1 / 1;">
+                    <strong>@<%= postUser %></strong>
+                </div>
+                <p><%= post[1] %></p>
+                <% if (post[2] != null && !post[2].isEmpty()) { %>
+                    <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
+                <% } %>
 
                    <!--按鈕區 -->
                     <div class="mt-2 d-flex align-items-center"> 

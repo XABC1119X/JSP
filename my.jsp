@@ -56,7 +56,11 @@ if (usertext == null || usertext.trim().isEmpty()) {
                     <p><%= usertext %></p>
                     <small class="text-muted">0 位粉絲</small>
                 </div>
-                <img src="<%= avatarUrl %>" class="rounded-circle" width="80" height="80">
+                <img id="avatarPreview"
+                src="<%= avatarUrl %>"
+                class="me-3"
+                style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; aspect-ratio: 1 / 1;">
+
             </div>
             <div class="mt-3 text-center">
                 <a href="editusertext.jsp" class="btn btn-outline-dark w-100 rounded-pill">編輯個人檔案</a>
@@ -70,18 +74,23 @@ if (usertext == null || usertext.trim().isEmpty()) {
 
         <!-- Threads 貼文 -->
         <div class="mt-4" >
-        <% for (int i = posts.size() - 1; i >= 0; i--) {
-            String[] post = posts.get(i);
-            if (!post[0].equals(user)) continue;
-        %>
-            <div class="card mb-3 p-3 shadow-sm">
+            <% for (int i = posts.size() - 1; i >= 0; i--) {
+                String[] post = posts.get(i);
+            
+                String postUser = post[0];
+                String postAvatar = (String) application.getAttribute("avatar_" + postUser);
+                if (postAvatar == null || postAvatar.trim().isEmpty()) {
+                    postAvatar = "img/avatar.png";
+                }
+            %>
+            <div class="card mb-3 p-3">
                 <div class="d-flex align-items-center mb-2">
-                    <img src="img/avatar.png" class="rounded-circle me-2" width="40" height="40">
-                    <strong>@<%= post[0] %></strong>
+                    <img src="<%= postAvatar %>" class="rounded-circle me-2" width="40" height="40">
+                    <strong>@<%= postUser %></strong>
                 </div>
                 <p><%= post[1] %></p>
                 <% if (post[2] != null && !post[2].isEmpty()) { %>
-                    <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width: 100%;">
+                    <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
                 <% } %>
                 <div class="mt-2 d-flex align-items-center gap-2">
                     <span style="cursor:pointer; color: red;">❤️</span>

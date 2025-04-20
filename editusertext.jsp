@@ -70,7 +70,11 @@
             <form method="post">
                 <!-- 頭像 -->
                 <div class="d-flex align-items-center mb-3 p-3 bg-white rounded shadow-sm">
-                    <img id="avatarPreview" src="<%= avatarUrl %>" class="rounded-circle me-3" width="60" height="60">
+                    <img id="avatarPreview"
+                    src="<%= avatarUrl %>"
+                    class="me-3"
+                    style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; aspect-ratio: 1 / 1;">
+
                     <div>
                         <strong><%= user %></strong><br>
                         <input type="text" name="avatarUrl" class="form-control mt-1" placeholder="貼上圖片網址"
