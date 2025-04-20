@@ -147,7 +147,7 @@
         </div>
     
         <!-- 右側留言牆 -->
-        <div class="content">
+        <div class="content ">
             <h3>🧵 首頁</h3>
             <% for (int i = posts.size() - 1; i >= 0; i--) {
                 String[] post = posts.get(i);

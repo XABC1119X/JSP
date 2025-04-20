@@ -15,7 +15,15 @@
     if (posts == null) posts = new ArrayList<>();
 %>
 <%
-String usertext = "這人很懶沒留下任何訊息";
+String avatarUrl = (String) application.getAttribute("avatar_" + user);
+if (avatarUrl == null || avatarUrl.trim().isEmpty()) {
+    avatarUrl = "img/avatar.png";
+}
+
+String usertext = (String) application.getAttribute("usertext_" + user);
+if (usertext == null || usertext.trim().isEmpty()) {
+    usertext = "這人很懶沒留下任何訊息";
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -26,7 +34,7 @@ String usertext = "這人很懶沒留下任何訊息";
     <link rel="stylesheet" type ="text/css" href="css/style.css">
 </head>
 <body class="bg-light">
-<div class="container py-4">
+<div class="container py-4" >
      <!-- 左側列表 -->
      <div class="sidebar">
         <ul>
@@ -37,49 +45,67 @@ String usertext = "這人很懶沒留下任何訊息";
     </div>
 
      <!-- 右側留言牆 -->
-     <div class="content">
-       <h3>👤 @<%= user %> 的 Threads <button><a href="editusertext.jsp"> 編輯個人檔案</a></button> </h3>
-       <br>
-       <h5> <%= usertext %></h5>
-
-       <% for (int i = posts.size() - 1; i >= 0; i--) {
-        String[] post = posts.get(i);
-    %>
-        <div class="card mb-3 p-3">
-            <strong>@<%= post[0] %></strong><br>
-            <p><%= post[1] %></p>
-            <% if (post[2] != null && !post[2].isEmpty()) { %>
-                <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width:300px">
-            <% } %>
-
-            <div class="mt-2 d-flex align-items-center">            
-                    <input type="hidden" name="likeIndex" value="<%= i %>">
-                    <span style="cursor:pointer;  color: red;" onclick="document.getElementById('likeForm-<%= i %>').submit()">❤️</span>&nbsp;&nbsp;
-                <span id="like-count-<%= i %>"><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>&nbsp;&nbsp;</span>
-                💬 <span class="text-dark fw-bold">留言</span>
+     <div class="flex-grow-1 mx-auto" style="max-width: 700px;">
+        <h6 class="text-center">個人檔案</h6>
+        <!-- 個人資料卡 -->
+        <div class="card shadow-sm p-4 rounded-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="fw-bold"><%= user %></h4>
+                    <p class="text-muted">@<%= user %></p>
+                    <p><%= usertext %></p>
+                    <small class="text-muted">0 位粉絲</small>
+                </div>
+                <img src="<%= avatarUrl %>" class="rounded-circle" width="80" height="80">
             </div>
-
-          <!-- 留言 -->
-          <div id="comment-form-<%= i %>" style="display: none;" class="mt-2">
-            <form method="post">
-                <input type="hidden" name="commentIndex" value="<%= i %>">
-            </form>
-         </div>
-
-            <div class="comment-section mt-2 ps-2">
-                <%
-                    for (int j = 4; j < post.length; j++) {
-                %>
-                    <div class="comment-item d-flex align-items-start gap-1 mb-1">
-                        <span class="text-muted">💬</span>
-                        <div class="text-muted small"><%= post[j] %></div>
-                    </div>
-                <%
-                    }
-                %>
+            <div class="mt-3 text-center">
+                <a href="editusertext.jsp" class="btn btn-outline-dark w-100 rounded-pill">編輯個人檔案</a>
+            </div>
+            <div class="d-flex justify-content-center gap-4 mt-4 border-bottom pb-2">
+                <span class="fw-bold border-bottom border-dark pb-1">串文</span>
+                <span class="text-muted">回覆</span>
+                <span class="text-muted">轉發</span>
             </div>
         </div>
-    <% } %>
+
+        <!-- Threads 貼文 -->
+        <div class="mt-4" >
+        <% for (int i = posts.size() - 1; i >= 0; i--) {
+            String[] post = posts.get(i);
+            if (!post[0].equals(user)) continue;
+        %>
+            <div class="card mb-3 p-3 shadow-sm">
+                <div class="d-flex align-items-center mb-2">
+                    <img src="img/avatar.png" class="rounded-circle me-2" width="40" height="40">
+                    <strong>@<%= post[0] %></strong>
+                </div>
+                <p><%= post[1] %></p>
+                <% if (post[2] != null && !post[2].isEmpty()) { %>
+                    <img src="<%= post[2] %>" class="img-fluid rounded" style="max-width: 100%;">
+                <% } %>
+                <div class="mt-2 d-flex align-items-center gap-2">
+                    <span style="cursor:pointer; color: red;">❤️</span>
+                    <span id="like-count-<%= i %>"><%= post.length > 3 ? post[3] : "0" %> 人喜歡</span>
+                    💬 <span class="text-dark fw-bold">留言</span>
+                </div>
+
+                <div class="comment-section mt-2 ps-2">
+                    <%
+                        for (int j = 4; j < post.length; j++) {
+                    %>
+                        <div class="comment-item d-flex align-items-start gap-1 mb-1">
+                            <span class="text-muted">💬</span>
+                            <div class="text-muted small"><%= post[j] %></div>
+                        </div>
+                    <%
+                        }
+                    %>
+                </div>
+            </div>
+        <% } %>
+        </div>
+    </div>
+</div>
 </div>
 </div>
 </body>
