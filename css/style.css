@@ -181,6 +181,7 @@ h3 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .panel-header {
   font-size: 1.5rem;
   font-weight: bold;
@@ -189,6 +190,7 @@ h3 {
   border-bottom: solid rgba(53, 53, 53, 0.756) 1px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .panel-content {
   padding: 3% 0;
 }
