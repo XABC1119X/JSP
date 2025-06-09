@@ -2,7 +2,7 @@
 <%@ page import="jakarta.servlet.http.*, java.util.*" %>
 <%@ page import="jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse" %>
 
-
+<%@ page import="model.UserDatabase" %>
 <%
     String error = null;
 
@@ -10,12 +10,19 @@
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if ("1234".equals(username) && "1234".equals(password)) {
-            session.setAttribute("user", username); 
-            response.sendRedirect("index.jsp");
-            return; 
+        if ("register".equals(request.getParameter("action"))) {
+            response.sendRedirect("register.jsp");
+            return;
+        }
+
+        if (!UserDatabase.exists(username)) {
+            error = "❗此帳號尚未註冊";
+        } else if (!UserDatabase.authenticate(username, password)) {
+            error = "❗密碼錯誤";
         } else {
-            error = "帳號或密碼錯誤";
+            session.setAttribute("user", username);
+            response.sendRedirect("index.jsp");
+            return;
         }
     }
 %>
@@ -47,8 +54,9 @@
             <input type="password" name="password" class="form-control mb-3" placeholder="密碼" required>
             <div class="d-grid gap-2">
                 <button name="action" value="login" class="btn btn-dark">登入</button>
-                <button name="action" value="register" class="btn btn-outline-dark">註冊</button>
+                <a href="register.jsp" class="btn btn-outline-dark">註冊</a>
             </div>
+
         </form>
         <% if (error != null) { %>
             <div class="alert alert-danger mt-3"><%= error %></div>
