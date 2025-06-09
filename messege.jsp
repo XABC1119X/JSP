@@ -2,10 +2,31 @@
 <%
     String sender = (String) session.getAttribute("user");
     String recipient = request.getParameter("to");
-    String user = (String) session.getAttribute("user");
 
-    if (user == null) {
+    if (sender == null) {
         response.sendRedirect("login.jsp");
+        return;
+    }
+
+    if (recipient == null || recipient.trim().isEmpty()) {
+%>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>私訊聊天室</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        </head>
+        <body class="container py-4">
+            <h3>輸入要聊天的使用者名稱</h3>
+            <form method="get" action="chat.jsp">
+                <div class="input-group mb-3">
+                    <input type="text" name="to" class="form-control" placeholder="對方使用者名稱">
+                    <button type="submit" class="btn btn-success">開始聊天</button>
+                </div>
+            </form>
+        </body>
+        </html>
+<%
         return;
     }
 %>
@@ -31,9 +52,9 @@
         const chatBox = document.getElementById("chat-box");
 
         ws.onmessage = function(event) {
-            const p = document.createElement("div");
-            p.textContent = event.data;
-            chatBox.appendChild(p);
+            const div = document.createElement("div");
+            div.textContent = event.data;
+            chatBox.appendChild(div);
             chatBox.scrollTop = chatBox.scrollHeight;
         };
 
