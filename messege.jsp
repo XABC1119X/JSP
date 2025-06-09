@@ -2,7 +2,9 @@
 <%
     String sender = (String) session.getAttribute("user");
     String recipient = request.getParameter("to");
-    if (sender == null || recipient == null) {
+    String user = (String) session.getAttribute("user");
+
+    if (user == null) {
         response.sendRedirect("login.jsp");
         return;
     }
